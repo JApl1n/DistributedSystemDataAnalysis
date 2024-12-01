@@ -1,0 +1,7 @@
+pika
+awkward
+uproot
+vector
+matplotlib
+lmfit
+docker

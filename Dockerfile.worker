@@ -1,0 +1,15 @@
+# Base image
+FROM python
+
+# Set working directory
+WORKDIR /app
+
+# Copy files into the container
+COPY . /app
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Default command for the container
+CMD ["bash", "test_connection.sh"] 
+CMD ["python", "worker.py"]

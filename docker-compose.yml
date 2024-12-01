@@ -1,0 +1,54 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    container_name: rabbitmq
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+        reservations:
+          memory: 512MB
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+    deploy:
+      replicas: 5  # Number of workers
+    command: ["python", "-u", "worker.py"]
+    entrypoint: ["sh", "-c", "until python -c 'import pika; pika.BlockingConnection(pika.ConnectionParameters(\"rabbitmq\"))' 2>/dev/null; do echo waiting for rabbitmq; sleep 2; done; echo RabbitMQ is ready!; python worker.py"]
+
+  master:
+    build:
+      context: .
+      dockerfile: Dockerfile.master
+    environment:
+      - WORKER_COUNT=5  # Number of workers, also change here
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Mount Docker socket
+    command: ["python", "master.py"]
+
+  aggregator:
+    build:
+      context: .
+      dockerfile: Dockerfile.aggregator
+    volumes:
+      - ./aggregatorOutput:/app/output
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+    command: ["python", "aggregator.py"]
+

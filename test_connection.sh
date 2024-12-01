@@ -1,0 +1,1 @@
+docker exec -it f47a4853b239e8eec95674d5b7220d0b2aa333565c3f4fac224e619deedb0ee1 python test_connection.py
