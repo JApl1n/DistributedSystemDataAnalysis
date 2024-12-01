@@ -9,7 +9,7 @@ The system is one GitHub repository that includes all files needed, all that you
 
     git clone https://github.com/JApl1n/DistributedSystemDataAnalysis/
 
-    cd Assessment
+    cd DistributedSystemDataAnalysis
 
 3) Download data:
 
