@@ -7,19 +7,19 @@ The system is one GitHub repository that includes all files needed, all that you
 ### Instructions:
 1) Clone the repository:
 
-  git clone 
-  cd Assessment
+    git clone 
+    cd Assessment
 
 2) Download data:
 
-  python downloadData.py
+    python downloadData.py
 
 2) Build the system:
 
-  docker-compose build
+    docker-compose build
 
 3) Run system with desired number of workers:
 
-  docker-compose up --scale worker=N
+    docker-compose up --scale worker=N
 
 4) After completion, check the /aggregatorOutput folder for the output.png plto. The aggregator will be the only container running. Close it if you wish with Ctrl+C.
