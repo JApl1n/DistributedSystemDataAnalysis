@@ -8,9 +8,10 @@ The system is one GitHub repository that includes all files needed, all that you
 1) Clone the repository:
 
     git clone 
+
     cd Assessment
 
-2) Download data:
+3) Download data:
 
     python downloadData.py
 
